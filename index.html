@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru-ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Приглашение на юбилей</title>
+    <meta name="description" content="Сердечно приглашаю вас на мой юбилей! 24 мая 2026, Кызыл, ресторан Nova. Жду вас!">
+    
+    <!-- OPEN GRAPH (для Telegram, WhatsApp, Viber, Facebook, ВК) -->
+    <meta property="og:title" content="Приглашение на юбилей | Серээ Станислава Сандак-Доржуевна" />
+    <meta property="og:description" content="Сердечно приглашаю вас на мой юбилей! Жду вас 24 мая 2026 в ресторане Nova, Кызыл." />
+    <meta property="og:image" content="https://nalremat-17.github.io/priglash/preview.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://nalremat-17.github.io/priglash/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Приглашение на юбилей" />
+    
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Приглашение на юбилей | Серээ Станислава" />
+    <meta name="twitter:description" content="Жду вас на моём юбилее! 24 мая 2026, Кызыл." />
+    <meta name="twitter:image" content="https://nalremat-17.github.io/priglash/preview.jpg" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'EB Garamond', serif; 
+            background: #2b2b2b; 
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 0; background: transparent; }
+        * { scrollbar-width: none; }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-image: url('fon.jfif');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            position: relative;
+            border-radius: 56px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            overflow-x: hidden;
+        }
+        .page-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .App { position: relative; z-index: 2; }
+
+        .envelope-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease; cursor: pointer;
+        }
+        .envelope-overlay.hide { opacity: 0; visibility: hidden; }
+        .real-envelope {
+            width: 360px;
+            max-width: 88vw;
+            border-radius: 16px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.15);
+            animation: gentleFloat 2.8s infinite ease-in-out;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        .envelope-img { width: 100%; height: auto; display: block; border-radius: 16px; }
+
+        .main-content { opacity: 0; visibility: hidden; transition: opacity 0.5s ease; }
+        .main-content.visible { opacity: 1; visibility: visible; }
+        
+        .welcome_title_text {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            color: #ffc061;
+            text-align: center;
+        }
+        .descr_text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #ffffff;
+            font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .hero-photo { text-align: center; margin: 30px 0; }
+        .hero-photo img {
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #ffd966;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            background: white;
+        }
+        .content-photo {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .content-photo img {
+            width: 500px;
+            height: auto;
+            border-radius: 30px;
+            border: 3px solid #ffd966;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: white;
+            max-width: 90%;
+        }
+        @media (max-width: 700px) {
+            .hero-photo img { width: 280px; height: 280px; }
+            .content-photo img { width: 90%; }
+            .welcome_title_text { font-size: 1.8rem; }
+            .descr_text { font-size: 1rem; }
+        }
+
+        .header, .info-date, .combined-section, .places, .gallery-section {
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 56px;
+            margin: 1.8rem;
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .combined-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (max-width: 900px) {.combined-grid { grid-template-columns: 1fr; }}
+
+        .calendar-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffd58c;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+        .calendar-weekday {
+            font-weight: 700;
+            color: #ffc061;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .calendar-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .calendar-day.highlight {
+            background: radial-gradient(circle, #ffdf8a 0%, #c78900 100%);
+            color: #000;
+            font-weight: 800;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255,192,97,0.5);
+        }
+        .calendar-day.other-month { opacity: 0.2; }
+
+        .timer-flex {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .timer-card {
+            background: radial-gradient(circle, #ffe39f 0%, #b37a00 100%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .timer-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2b1d00;
+            line-height: 1;
+        }
+        .timer-label {
+            color: #2b1d00;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .button {
+            background: #c74309;
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+        .button:hover { background: #a70404; transform: scale(0.97); }
+
+        .gallery-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .gallery-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .gallery-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .gallery-slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .gallery-dot.active {
+            background: #ffc061;
+            transform: scale(1.2);
+        }
+        @media (max-width: 600px) {
+            .gallery-slide img { height: 250px; }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #ffecb3;
+        }
+        .music-btn {
+            background: rgba(0,0,0,0.6);
+            border-radius: 60px;
+            padding: 8px 24px;
+            cursor: pointer;
+            border: 1px solid #e0b070;
+            color: #f3e2ba;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <div class="real-envelope" id="realEnvelope">
+            <img class="envelope-img" src="конверт.jfif" alt="Приглашение">
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="page-wrapper">
+            <div class="App">
+                <div style="text-align: center; padding-top: 20px;">
+                    <audio id="bg-sound" loop>
+                        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3" type="audio/mpeg">
+                        <source src="муз.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="music-btn" id="stopMusicBtn">♫ Музыка</div>
+                </div>
+
+                <div class="hero-photo">
+                    <img src="фыв.jfif" alt="Серээ Станислава">
+                </div>
+
+                <section class="info-date">
+                    <h2 class="welcome_title_text">Юбилейный День Рождения!</h2>
+                    <p class="descr_text" style="max-width: 650px; margin: 1.2rem auto;">
+                        Дорогие близкие и друзья!<br>
+                        С огромной радостью приглашаю Вас разделить со мной мой Юбилей!<br>
+                        Вечер обещает быть тёплым, ярким и незабываемым. 
+                    </p>
+                </section>
+
+                <div class="content-photo">
+                    <img src="ййцу.jfif" alt="Юбилейное фото">
+                </div>
+
+                <section class="combined-section">
+                    <div class="combined-grid">
+                        <div class="calendar-box">
+                            <div class="calendar-title">Май 2026</div>
+                            <div class="calendar-weekdays">
+                                <div class="calendar-weekday">ПН</div><div class="calendar-weekday">ВТ</div>
+                                <div class="calendar-weekday">СР</div><div class="calendar-weekday">ЧТ</div>
+                                <div class="calendar-weekday">ПТ</div><div class="calendar-weekday">СБ</div>
+                                <div class="calendar-weekday">ВС</div>
+                            </div>
+                            <div class="calendar-days-grid" id="calendarGrid"></div>
+                        </div>
+                        
+                        <div class="timer-box">
+                            <h2 class="calendar-title" style="margin-bottom: 2rem;">До торжества:</h2>
+                            <div class="timer-flex">
+                                <div class="timer-card"><span class="timer-number" id="days">0</span><div class="timer-label">дней</div></div>
+                                <div class="timer-card"><span class="timer-number" id="hours">0</span><div class="timer-label">час</div></div>
+                                <div class="timer-card"><span class="timer-number" id="minutes">0</span><div class="timer-label">мин</div></div>
+                                <div class="timer-card"><span class="timer-number" id="seconds">0</span><div class="timer-label">сек</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="places">
+                    <h2 class="welcome_title_text">Ждём Вас</h2>
+                    <div style="text-align: center;" class="descr_text">
+                        <p style="font-weight: 800; font-size: 1.5rem; color:#ffcd82;">Ресторан "Nova"</p>
+                        <p>г. Кызыл, ул. Кечил-Оола, 3/2</p>
+                        <p style="color:#ffda9e; font-style: italic; margin-top: 10px;">Сбор гостей с 16:30 · Начало в 17:00</p>
+                        <button class="button" onclick="window.open('https://2gis.ru/kyzyl/firm/70000001038477561','_blank')">Открыть 2ГИС</button>
+                    </div>
+                </section>
+
+                <div class="gallery-container">
+                    <div class="gallery-slides" id="gallerySlides">
+                        <div class="gallery-slide"><img src="рис1.jfif" alt="Фото 1"></div>
+                        <div class="gallery-slide"><img src="втор.jfif" alt="Фото 2"></div>
+                        <div class="gallery-slide"><img src="чет.jfif" alt="Фото 3"></div>
+                        <div class="gallery-slide"><img src="пер.jfif" alt="Фото 4"></div>
+                        <div class="gallery-slide"><img src="пят.jfif" alt="Фото 5"></div>
+                    </div>
+                </div>
+                <div class="gallery-nav" id="galleryNav">
+                    <div class="gallery-dot active" data-index="0"></div>
+                    <div class="gallery-dot" data-index="1"></div>
+                    <div class="gallery-dot" data-index="2"></div>
+                    <div class="gallery-dot" data-index="3"></div>
+                    <div class="gallery-dot" data-index="4"></div>
+                </div>
+
+                <section class="places">
+                    <footer class="footer">
+                        <p style="font-size: 1.5rem; font-weight: 700;">С уважением, Станислава Сандак–Доржуевна</p>
+                        <p style="margin-top: 10px;">+7(929)-358-55-45</p>
+                    </footer>
+                </section>    
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function buildCalendar(year, month, highlightDay) {
+            const grid = document.getElementById('calendarGrid');
+            if (!grid) return;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            
+            grid.innerHTML = '';
+            for (let i = 0; i < startOffset; i++) {
+                const d = document.createElement('div'); d.className = 'calendar-day other-month'; 
+                d.innerText = '';
+                grid.appendChild(d);
+            }
+            for (let i = 1; i <= daysInMonth; i++) {
+                const d = document.createElement('div');
+                d.className = 'calendar-day' + (i === highlightDay ? ' highlight' : '');
+                d.innerText = i;
+                grid.appendChild(d);
+            }
+        }
+
+        const envelopeLayer = document.getElementById('envelopeOverlay');
+        const mainBlock = document.getElementById('mainContent');
+        const myAudio = document.getElementById('bg-sound');
+
+        function revealInvitation() {
+            envelopeLayer.classList.add('hide');
+            mainBlock.classList.add('visible');
+            buildCalendar(2026, 4, 24);
+            if (myAudio) {
+                myAudio.volume = 0.4;
+                myAudio.loop = true;
+                myAudio.play().catch(() => {});
+            }
+        }
+
+        document.getElementById('realEnvelope').addEventListener('click', revealInvitation);
+        envelopeLayer.addEventListener('click', (e) => {
+            if (e.target === envelopeLayer) revealInvitation();
+        });
+
+        function updateTimer() {
+            const target = new Date(2026, 4, 24, 17, 0, 0);
+            const diff = target - new Date();
+            const d = diff < 0 ? 0 : diff;
+            document.getElementById('days').innerText = Math.floor(d / 86400000);
+            document.getElementById('hours').innerText = Math.floor((d % 86400000) / 3600000);
+            document.getElementById('minutes').innerText = Math.floor((d % 3600000) / 60000);
+            document.getElementById('seconds').innerText = Math.floor((d % 60000) / 1000);
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        const stopBtn = document.getElementById('stopMusicBtn');
+        if (stopBtn && myAudio) {
+            stopBtn.onclick = () => {
+                if (myAudio.paused) { 
+                    myAudio.play().catch(() => {});
+                    stopBtn.innerText = '♫ Выключить'; 
+                } else { 
+                    myAudio.pause(); 
+                    stopBtn.innerText = '♪ Включить'; 
+                }
+            };
+        }
+
+        // === ИСПРАВЛЕННОЕ СЛАЙД-ШОУ ДЛЯ 5 ФОТО ===
+        let currentSlide = 0;
+        const slides = document.getElementById('gallerySlides');
+        const dots = document.querySelectorAll('.gallery-dot');
+        const totalSlides = 5;  // ← ИСПРАВЛЕНО: 5 фотографий
+        let autoInterval;
+
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = 0;
+            currentSlide = index;
+            if (slides) slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, i) => {
+                if (i === currentSlide) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+        function nextSlide() { showSlide(currentSlide + 1); }
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                clearInterval(autoInterval);
+                showSlide(idx);
+                startAutoSlide();
+            });
+        });
+        function startAutoSlide() {
+            if (autoInterval) clearInterval(autoInterval);
+            autoInterval = setInterval(nextSlide, 2000);
+        }
+        if (slides && dots.length) {
+            startAutoSlide();
+            const galleryContainer = document.querySelector('.gallery-container');
+            if (galleryContainer) {
+                galleryContainer.addEventListener('mouseenter', () => clearInterval(autoInterval));
+                galleryContainer.addEventListener('mouseleave', startAutoSlide);
+            }
+        }
+    </script>
+</body>
+</html>
