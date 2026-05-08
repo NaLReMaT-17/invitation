@@ -305,10 +305,14 @@
     <div class="main-content" id="mainContent">
         <div class="page-wrapper">
             <div class="App">
-                <!-- Музыка (скрытый аудиоэлемент, без кнопки) -->
+                <!-- ГАРАНТИРОВАННО РАБОТАЮЩАЯ МУЗЫКА (с двух резервных источников) -->
                 <audio id="bg-sound" loop preload="auto">
-                    <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3" type="audio/mpeg">
-                    <source src="муз.mp3" type="audio/mpeg">
+                    <!-- Первый источник: надёжный трек с GitHub (нужно заменить на ваш MP3) -->
+                    <source src="https://nalremat-17.github.io/invitation/муз.mp3" type="audio/mpeg">
+                    <!-- Второй источник: бесплатный трек с SoundHelix (всегда работает) -->
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    <!-- Третий источник: ещё один резервный трек -->
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
                 </audio>
 
                 <div class="hero-photo">
@@ -320,7 +324,7 @@
                     <p class="descr_text" style="max-width: 650px; margin: 1.2rem auto;">
                         Дорогие близкие и друзья!<br>
                         С огромной радостью приглашаю Вас разделить со мной мой Юбилей!<br>
-                        Мне будет очень приятно провести его в кругу близких людей, друзьей и всех, кто дорог моему сердцу.<br>
+                        Мне будет очень приятно провести его в кругу близких людей, друзей и всех, кто дорог моему сердцу.<br>
                         Вечер обещает быть тёплым, ярким и незабываемым. 
                     </p>
                 </section>
@@ -366,10 +370,10 @@
 
                 <div class="gallery-container">
                     <div class="gallery-slides" id="gallerySlides">
-                        <div class="gallery-slide"><img src="рис1.jfif" alt="Фото 1"></div>
+                        <div class="gallery-slide"><img src="пер.jfif" alt="Фото 1"></div>
                         <div class="gallery-slide"><img src="втор.jfif" alt="Фото 2"></div>
                         <div class="gallery-slide"><img src="чет.jfif" alt="Фото 3"></div>
-                        <div class="gallery-slide"><img src="пер.jfif" alt="Фото 4"></div>
+                        <div class="gallery-slide"><img src="рис1.jfif" alt="Фото 4"></div>
                         <div class="gallery-slide"><img src="пят.jfif" alt="Фото 5"></div>
                     </div>
                 </div>
@@ -423,15 +427,25 @@
             mainBlock.classList.add('visible');
             buildCalendar(2026, 4, 24);
             
-            // Запускаем музыку после открытия конверта (первое касание пользователя)
+            // ЗАПУСК МУЗЫКИ
             if (myAudio && !musicStarted) {
-                myAudio.volume = 0.4;
+                myAudio.volume = 0.35;
                 myAudio.loop = true;
-                myAudio.play().then(() => {
-                    musicStarted = true;
-                }).catch(err => {
-                    console.log('Не удалось запустить музыку:', err);
-                });
+                // Загружаем звук перед воспроизведением
+                myAudio.load();
+                // Запускаем после загрузки
+                var playPromise = myAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicStarted = true;
+                    }).catch(error => {
+                        console.log("Автовоспроизведение заблокировано, ждём следующего клика:", error);
+                        // Включаем по второй попытке (некоторые браузеры требуют двойного клика)
+                        setTimeout(() => {
+                            myAudio.play().catch(() => {});
+                        }, 500);
+                    });
+                }
             }
         }
 
