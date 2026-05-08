@@ -6,7 +6,6 @@
     <title>Приглашение на юбилей</title>
     <meta name="description" content="Сердечно приглашаю вас на мой юбилей! 24 мая 2026, Кызыл, ресторан Nova. Жду вас!">
     
-    <!-- OPEN GRAPH -->
     <meta property="og:title" content="Приглашение на юбилей | Серээ Станислава Сандак-Доржуевна" />
     <meta property="og:description" content="Сердечно приглашаю вас на мой юбилей! Жду вас 24 мая 2026 в ресторане Nova, Кызыл." />
     <meta property="og:image" content="https://nalremat-17.github.io/invitation/preview.jpg" />
@@ -16,19 +15,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Приглашение на юбилей" />
     
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Приглашение на юбилей | Серээ Станислава" />
-    <meta name="twitter:description" content="Жду вас на моём юбилее! 24 мая 2026, Кызыл." />
-    <meta name="twitter:image" content="https://nalremat-17.github.io/invitation/preview.jpg" />
-    
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'EB Garamond', serif; 
-            background: #2b2b2b; 
-            overflow-x: hidden;
-        }
+        body { font-family: 'EB Garamond', serif; background: #2b2b2b; overflow-x: hidden; }
         ::-webkit-scrollbar { width: 0; background: transparent; }
         * { scrollbar-width: none; }
 
@@ -305,11 +295,8 @@
     <div class="main-content" id="mainContent">
         <div class="page-wrapper">
             <div class="App">
-                <!-- Музыка (скрытый аудиоэлемент, без кнопки) -->
-                <audio id="bg-sound" loop preload="auto">
-                    <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3" type="audio/mpeg">
-                    <source src="муз.mp3" type="audio/mpeg">
-                </audio>
+                <!-- Аудио без preload, будем инициализировать строго после клика -->
+                <audio id="bg-sound" loop></audio>
 
                 <div class="hero-photo">
                     <img src="фыв.jfif" alt="Серээ Станислава">
@@ -417,20 +404,37 @@
         const myAudio = document.getElementById('bg-sound');
         let musicStarted = false;
 
+        // Функция инициализации аудио и воспроизведения (для iPhone)
+        function initAndPlayAudio() {
+            if (!myAudio || musicStarted) return;
+            
+            myAudio.volume = 0.4;
+            myAudio.loop = true;
+            
+            // Устанавливаем источник звука прямо перед вызовом play()
+            myAudio.src = "https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3";
+            myAudio.load();
+            
+            // Пробуем воспроизвести
+            var playPromise = myAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicStarted = true;
+                }).catch(error => {
+                    console.log("Автовоспроизведение заблокировано:", error);
+                    // для iOS можно показать маленькую кнопку, но мы уже в жесте, так что должно сработать
+                });
+            }
+        }
+
         function revealInvitation() {
             envelopeLayer.classList.add('hide');
             mainBlock.classList.add('visible');
             buildCalendar(2026, 4, 24);
             
-            // Запускаем музыку после открытия конверта (первое касание пользователя)
-            if (myAudio && !musicStarted) {
-                myAudio.volume = 0.4;
-                myAudio.loop = true;
-                myAudio.play().then(() => {
-                    musicStarted = true;
-                }).catch(err => {
-                    console.log('Не удалось запустить музыку:', err);
-                });
+            // Запускаем музыку сразу после открытия (один раз)
+            if (!musicStarted) {
+                initAndPlayAudio();
             }
         }
 
@@ -451,7 +455,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Слайд-шоу для 5 фото
+        // Слайд-шоу
         let currentSlide = 0;
         const slides = document.getElementById('gallerySlides');
         const dots = document.querySelectorAll('.gallery-dot');
