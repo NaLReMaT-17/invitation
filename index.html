@@ -6,7 +6,7 @@
     <title>Приглашение на юбилей</title>
     <meta name="description" content="Сердечно приглашаю вас на мой юбилей! 24 мая 2026, Кызыл, ресторан Nova. Жду вас!">
     
-    <!-- OPEN GRAPH (для Telegram, WhatsApp, Viber, Facebook, ВК) -->
+    <!-- OPEN GRAPH -->
     <meta property="og:title" content="Приглашение на юбилей | Серээ Станислава Сандак-Доржуевна" />
     <meta property="og:description" content="Сердечно приглашаю вас на мой юбилей! Жду вас 24 мая 2026 в ресторане Nova, Кызыл." />
     <meta property="og:image" content="https://nalremat-17.github.io/invitation/preview.jpg" />
@@ -16,11 +16,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Приглашение на юбилей" />
     
-    <!-- TWITTER CARD -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Приглашение на юбилей | Серээ Станислава" />
     <meta name="twitter:description" content="Жду вас на моём юбилее! 24 мая 2026, Кызыл." />
-    <meta name="twitter:image" content="https://nalremat-17.github.io/priglash/preview.jpg" />
+    <meta name="twitter:image" content="https://nalremat-17.github.io/invitation/preview.jpg" />
     
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -106,8 +105,8 @@
 
         .hero-photo { text-align: center; margin: 30px 0; }
         .hero-photo img {
-            width: 600px;
-            height: 600px;
+            width: min(600px, 80vw);
+            height: min(600px, 80vw);
             object-fit: cover;
             border-radius: 50%;
             border: 5px solid #ffd966;
@@ -119,17 +118,14 @@
             margin: 30px 0;
         }
         .content-photo img {
-            width: 500px;
+            width: min(500px, 90vw);
             height: auto;
             border-radius: 30px;
             border: 3px solid #ffd966;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             background: white;
-            max-width: 90%;
         }
         @media (max-width: 700px) {
-            .hero-photo img { width: 280px; height: 280px; }
-            .content-photo img { width: 90%; }
             .welcome_title_text { font-size: 1.8rem; }
             .descr_text { font-size: 1rem; }
         }
@@ -148,7 +144,7 @@
             gap: 2rem;
             align-items: center;
         }
-        @media (max-width: 900px) {.combined-grid { grid-template-columns: 1fr; }}
+        @media (max-width: 900px) {.combined-grid { grid-template-columns: 1fr; gap: 1rem; }}
 
         .calendar-title {
             font-size: 1.8rem;
@@ -156,6 +152,11 @@
             color: #ffd58c;
             margin-bottom: 1rem;
             text-align: center;
+        }
+        @media (max-width: 600px) {
+            .calendar-title { font-size: 1.3rem; }
+            .calendar-weekday { font-size: 0.7rem; }
+            .calendar-day { font-size: 0.7rem; }
         }
         .calendar-weekdays {
             display: grid;
@@ -202,8 +203,8 @@
         }
         .timer-card {
             background: radial-gradient(circle, #ffe39f 0%, #b37a00 100%);
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
@@ -212,8 +213,13 @@
             border: 2px solid #fff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
+        @media (max-width: 500px) {
+            .timer-card { width: 65px; height: 65px; }
+            .timer-number { font-size: 1.3rem; }
+            .timer-label { font-size: 0.55rem; }
+        }
         .timer-number {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: #2b1d00;
             line-height: 1;
@@ -221,7 +227,7 @@
         .timer-label {
             color: #2b1d00;
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
         }
 
@@ -257,19 +263,21 @@
         }
         .gallery-slide img {
             width: 100%;
-            height: 400px;
+            height: auto;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
             display: block;
         }
         .gallery-nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         .gallery-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
@@ -279,23 +287,11 @@
             background: #ffc061;
             transform: scale(1.2);
         }
-        @media (max-width: 600px) {
-            .gallery-slide img { height: 250px; }
-        }
 
         .footer {
             text-align: center;
             padding: 2rem;
             color: #ffecb3;
-        }
-        .music-btn {
-            background: rgba(0,0,0,0.6);
-            border-radius: 60px;
-            padding: 8px 24px;
-            cursor: pointer;
-            border: 1px solid #e0b070;
-            color: #f3e2ba;
-            display: inline-block;
         }
     </style>
 </head>
@@ -309,13 +305,11 @@
     <div class="main-content" id="mainContent">
         <div class="page-wrapper">
             <div class="App">
-                <div style="text-align: center; padding-top: 20px;">
-                    <audio id="bg-sound" loop>
-                        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3" type="audio/mpeg">
-                        <source src="муз.mp3" type="audio/mpeg">
-                    </audio>
-                    <div class="music-btn" id="stopMusicBtn">♫ Музыка</div>
-                </div>
+                <!-- Музыка (скрытый аудиоэлемент, без кнопки) -->
+                <audio id="bg-sound" loop preload="auto">
+                    <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_dd8536f5f1.mp3?filename=calm-piano-112537.mp3" type="audio/mpeg">
+                    <source src="муз.mp3" type="audio/mpeg">
+                </audio>
 
                 <div class="hero-photo">
                     <img src="фыв.jfif" alt="Серээ Станислава">
@@ -421,15 +415,22 @@
         const envelopeLayer = document.getElementById('envelopeOverlay');
         const mainBlock = document.getElementById('mainContent');
         const myAudio = document.getElementById('bg-sound');
+        let musicStarted = false;
 
         function revealInvitation() {
             envelopeLayer.classList.add('hide');
             mainBlock.classList.add('visible');
             buildCalendar(2026, 4, 24);
-            if (myAudio) {
+            
+            // Запускаем музыку после открытия конверта (первое касание пользователя)
+            if (myAudio && !musicStarted) {
                 myAudio.volume = 0.4;
                 myAudio.loop = true;
-                myAudio.play().catch(() => {});
+                myAudio.play().then(() => {
+                    musicStarted = true;
+                }).catch(err => {
+                    console.log('Не удалось запустить музыку:', err);
+                });
             }
         }
 
@@ -450,28 +451,15 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        const stopBtn = document.getElementById('stopMusicBtn');
-        if (stopBtn && myAudio) {
-            stopBtn.onclick = () => {
-                if (myAudio.paused) { 
-                    myAudio.play().catch(() => {});
-                    stopBtn.innerText = '♫ Выключить'; 
-                } else { 
-                    myAudio.pause(); 
-                    stopBtn.innerText = '♪ Включить'; 
-                }
-            };
-        }
-
-        // === ИСПРАВЛЕННОЕ СЛАЙД-ШОУ ДЛЯ 5 ФОТО ===
+        // Слайд-шоу для 5 фото
         let currentSlide = 0;
         const slides = document.getElementById('gallerySlides');
         const dots = document.querySelectorAll('.gallery-dot');
-        const totalSlides = 5;  // ← ИСПРАВЛЕНО: 5 фотографий
+        const totalSlides = 5;
         let autoInterval;
 
         function showSlide(index) {
-            if (index < 0) index = 0;
+            if (index < 0) index = totalSlides - 1;
             if (index >= totalSlides) index = 0;
             currentSlide = index;
             if (slides) slides.style.transform = `translateX(-${currentSlide * 100}%)`;
@@ -498,6 +486,8 @@
             if (galleryContainer) {
                 galleryContainer.addEventListener('mouseenter', () => clearInterval(autoInterval));
                 galleryContainer.addEventListener('mouseleave', startAutoSlide);
+                galleryContainer.addEventListener('touchstart', () => clearInterval(autoInterval));
+                galleryContainer.addEventListener('touchend', startAutoSlide);
             }
         }
     </script>
